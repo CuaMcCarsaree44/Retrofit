@@ -1,12 +1,12 @@
 package com.example.retrofit.services
-
-import com.example.retrofit.model.datas
-import retrofit2.http.GET
+import com.example.retrofit.model.Datas
 import retrofit2.Call
+import retrofit2.http.GET
 
-//val URL:String = "https://www.booknomads.com/api/v0/isbn/9789000035526"
+
+//val URL:String = "https://date.nager.at/api/v2/publicholidays/yyyy/CD/"
 interface ApiServices {
 
-    @GET("https://www.booknomads.com/api/v0/isbn/")
-    fun getAllData(text:String):Call<datas>
+    @GET("https://date.nager.at/api/v2/publicholidays/")
+    fun getAllData(text:String): Call<Datas>
 }
