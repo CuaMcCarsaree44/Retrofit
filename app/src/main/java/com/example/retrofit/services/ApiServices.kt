@@ -8,5 +8,5 @@ import retrofit2.http.GET
 interface ApiServices {
 
     @GET("https://date.nager.at/api/v2/publicholidays/")
-    fun getAllData(text:String): Call<Datas>
+    fun getAllData(): Call<Datas>
 }

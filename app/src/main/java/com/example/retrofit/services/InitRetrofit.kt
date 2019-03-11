@@ -11,8 +11,9 @@ class InitRetrofit {
             return Retrofit.Builder().baseUrl(API_KEY).addConverterFactory(GsonConverterFactory.create()).build()
         }
 
-        fun getInstance():ApiServices
+        fun getInstance(code:String, year:Int):ApiServices
         {
+            API_KEY += "${year.toString()}/code/"
             return setInit().create(ApiServices::class.java)
         }
 
