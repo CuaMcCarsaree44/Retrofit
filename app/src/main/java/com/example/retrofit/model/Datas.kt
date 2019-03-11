@@ -1,13 +1,11 @@
 package com.example.retrofit.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Datas(
-   // val counties: Any,
-    var countryCode: String,
-    var date: String,
-   // r l fixed: Boolean,
-    //r l global: Boolean,
-    //r l launchYear: Any,
-    var localName: String,
-    var name: String,
-    var type: String
+    @SerializedName("countryCode") var countryCode: String,
+    @SerializedName("date") var date: String,
+    @SerializedName("localName") var localName: String,
+    @SerializedName("name") var name: String,
+    @SerializedName("type")var type: String
 )

@@ -5,16 +5,16 @@ import retrofit2.Retrofit
 
 class InitRetrofit {
     companion object {
-        var API_KEY:String = "https://date.nager.at/api/v2/publicholidays/"
-        fun setInit():Retrofit
+        var API_KEY:String = "https://date.nager.at/api/v2/PublicHolidays/"
+        fun setInit(code:String, year:Int):Retrofit
         {
-            return Retrofit.Builder().baseUrl(API_KEY).addConverterFactory(GsonConverterFactory.create()).build()
+            API_KEY = API_KEY + "$year/$code/"
+            return Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(API_KEY).build()
         }
 
         fun getInstance(code:String, year:Int):ApiServices
         {
-            API_KEY += "${year.toString()}/$code/"
-            return setInit().create(ApiServices::class.java)
+            return setInit(code, year).create(ApiServices::class.java)
         }
 
     }

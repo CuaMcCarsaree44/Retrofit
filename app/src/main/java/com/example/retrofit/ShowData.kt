@@ -14,8 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ShowData : AppCompatActivity() {
-    var collections: ArrayList<Datas>?=null
-    var dataBinder: Datas?=null
+    var adapter: DatasAdapter?= null
 
     companion object {
         val YEAR_PRIMARY_KEY:String = "Year"
@@ -33,36 +32,34 @@ class ShowData : AppCompatActivity() {
 
         rView = findViewById(R.id.recycleview)
         rView!!.layoutManager = LinearLayoutManager(this)
-        year = getIntent().getIntExtra(YEAR_PRIMARY_KEY, 0)
-        code = getIntent().getStringExtra(CODE_PRIMARY_KEY)
+        year = intent.getIntExtra(YEAR_PRIMARY_KEY, 0)
+        code = intent.getStringExtra(CODE_PRIMARY_KEY)
         showData()
     }
 
     fun showData()
     {
         var api:ApiServices = InitRetrofit.getInstance(code, year)
-        val collection:Call<Datas> = api.getAllData()
+        val collection: Call<ArrayList<Datas>> = api.getAllData()
 
-        collection.enqueue(object: Callback<Datas> {
-            override fun onResponse(call: Call<Datas>, response: Response<Datas>) {
-               // var coll:ArrayList<Datas> = response.body().
-                var status:Boolean = response.isSuccessful
-                if(status == true) {
-                    dataBinder!!.name = response.body()!!.name.toString()
-                    dataBinder!!.localName = response.body()!!.localName.toString()
-                    dataBinder!!.date = response.body()!!.date.toString()
-                    dataBinder!!.countryCode = response.body()!!.countryCode.toString()
-                    dataBinder!!.type = response.body()!!.type.toString()
-                    collections?.add(dataBinder!!)
-                    val adapter: DatasAdapter = DatasAdapter(this@ShowData)
-                    adapter.setColl(collections!!)
-                    rView?.setAdapter(adapter)
-                }else {}
-            }
-
-            override fun onFailure(call: Call<Datas>, t: Throwable) {
+        collection.enqueue(object: Callback<ArrayList<Datas>> {
+            override fun onFailure(call: Call<ArrayList<Datas>>, t: Throwable) {
                 Toast.makeText(this@ShowData, "Data Not Found", Toast.LENGTH_SHORT).show()
             }
+
+            override fun onResponse(call: Call<ArrayList<Datas>>, response: Response<ArrayList<Datas>>) {
+            var status:Boolean = response.isSuccessful
+                var feed:ArrayList<Datas> = response.body()!!
+            if(status == true) {
+                adapter = DatasAdapter(this@ShowData)
+                //rView?.getAdapter()?.notifyDataSetChanged()
+                adapter?.setColl(feed)
+
+                rView?.adapter = adapter
+            }else {
+            }
+            }
+
         })
     }
 

@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         text = findViewById(R.id.spinner_label)
         var adapter = ArrayAdapter.createFromResource(this, R.array.country, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        this.spinner?.setAdapter(adapter)
-        this.spinner?.setOnItemSelectedListener(this)
+        this.spinner?.adapter = adapter
+        this.spinner?.onItemSelectedListener = this
 
         search?.setOnClickListener(this)
     }
@@ -73,13 +73,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
         parent?.setSelection(-1)
-        text?.setText("--")
+        text?.text = "--"
 
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         code = parent?.getItemAtPosition(position).toString()
-        text?.setText(code)
+        text?.text = code
     }
 /*
     fun showBook()

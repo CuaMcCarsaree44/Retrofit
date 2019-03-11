@@ -10,13 +10,13 @@ import com.example.retrofit.R
 import com.example.retrofit.model.Datas
 
 class DatasAdapter(var context:Context): RecyclerView.Adapter<DatasAdapter.Handler>() {
-    var collection:ArrayList<Datas>? = null
+    var collection = ArrayList<Datas>()
 
     init{
         this.context = context
     }
 
-    fun setColl(coll:ArrayList<Datas>)
+    fun setColl(coll: ArrayList<Datas>)
     {
         collection = coll
     }
@@ -29,15 +29,15 @@ class DatasAdapter(var context:Context): RecyclerView.Adapter<DatasAdapter.Handl
     }
 
     override fun getItemCount(): Int {
-        return collection?.size!!.toInt()
+        return collection?.size!!
     }
 
     override fun onBindViewHolder(handler: Handler, i: Int) {
-      handler.code.setText(collection!!.get(i).countryCode)
-        handler.type.setText(collection!!.get(i).type)
-        handler.date.setText(collection!!.get(i).date)
-        handler.local.setText(collection!!.get(i).localName)
-        handler.name.setText(collection!!.get(i).name)
+        handler.code.text = collection!!.get(i).countryCode
+        handler.type.text = collection!!.get(i).type
+        handler.date.text = collection!!.get(i).date
+        handler.local.text = collection!!.get(i).localName
+        handler.name.text = collection!!.get(i).name
     }
 
 
