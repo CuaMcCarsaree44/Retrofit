@@ -9,6 +9,7 @@ import com.example.retrofit.adapter.DatasAdapter
 import com.example.retrofit.model.Datas
 import com.example.retrofit.services.ApiServices
 import com.example.retrofit.services.InitRetrofit
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,6 +42,7 @@ class ShowData : AppCompatActivity() {
     {
         var api:ApiServices = InitRetrofit.getInstance(code, year)
         val collection: Call<ArrayList<Datas>> = api.getAllData()
+        var jeson:Gson = Gson()
 
         collection.enqueue(object: Callback<ArrayList<Datas>> {
             override fun onFailure(call: Call<ArrayList<Datas>>, t: Throwable) {
@@ -49,14 +51,16 @@ class ShowData : AppCompatActivity() {
 
             override fun onResponse(call: Call<ArrayList<Datas>>, response: Response<ArrayList<Datas>>) {
             var status:Boolean = response.isSuccessful
-                var feed:ArrayList<Datas> = response.body()!!
+                var feed:ArrayList<Datas>? = response?.body()
             if(status == true) {
+                //Toast.makeText(this@ShowData, "Code is $code and Year is $year", Toast.LENGTH_LONG).show()
                 adapter = DatasAdapter(this@ShowData)
                 //rView?.getAdapter()?.notifyDataSetChanged()
                 adapter?.setColl(feed)
 
                 rView?.adapter = adapter
             }else {
+                Toast.makeText(this@ShowData, "HTTP Status: ${response.code()}", Toast.LENGTH_LONG).show()
             }
             }
 

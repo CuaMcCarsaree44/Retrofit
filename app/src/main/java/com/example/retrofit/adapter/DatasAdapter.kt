@@ -10,13 +10,13 @@ import com.example.retrofit.R
 import com.example.retrofit.model.Datas
 
 class DatasAdapter(var context:Context): RecyclerView.Adapter<DatasAdapter.Handler>() {
-    var collection = ArrayList<Datas>()
+    var collection:ArrayList<Datas>? = ArrayList<Datas>()
 
     init{
         this.context = context
     }
 
-    fun setColl(coll: ArrayList<Datas>)
+    fun setColl(coll: ArrayList<Datas>?)
     {
         collection = coll
     }
