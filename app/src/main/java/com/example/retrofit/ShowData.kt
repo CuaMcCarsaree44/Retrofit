@@ -15,7 +15,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ShowData : AppCompatActivity() {
-    var adapter: DatasAdapter?= null
+    var adapter: DatasAdapter = DatasAdapter(this)
 
     companion object {
         val YEAR_PRIMARY_KEY:String = "Year"
@@ -33,6 +33,8 @@ class ShowData : AppCompatActivity() {
 
         rView = findViewById(R.id.recycleview)
         rView!!.layoutManager = LinearLayoutManager(this)
+        rView?.adapter = adapter
+
         year = intent.getIntExtra(YEAR_PRIMARY_KEY, 0)
         code = intent.getStringExtra(CODE_PRIMARY_KEY)
         showData()
@@ -40,9 +42,8 @@ class ShowData : AppCompatActivity() {
 
     fun showData()
     {
-        var api:ApiServices = InitRetrofit.getInstance(code, year)
-        val collection: Call<ArrayList<Datas>> = api.getAllData()
-        var jeson:Gson = Gson()
+        var api:ApiServices = InitRetrofit.getInstance()
+        val collection: Call<ArrayList<Datas>> = api.getAllData(year, code)
 
         collection.enqueue(object: Callback<ArrayList<Datas>> {
             override fun onFailure(call: Call<ArrayList<Datas>>, t: Throwable) {
@@ -53,12 +54,8 @@ class ShowData : AppCompatActivity() {
             var status:Boolean = response.isSuccessful
                 var feed:ArrayList<Datas>? = response?.body()
             if(status == true) {
-                //Toast.makeText(this@ShowData, "Code is $code and Year is $year", Toast.LENGTH_LONG).show()
-                adapter = DatasAdapter(this@ShowData)
-                //rView?.getAdapter()?.notifyDataSetChanged()
                 adapter?.setColl(feed)
-
-                rView?.adapter = adapter
+                rView?.adapter?.notifyDataSetChanged()
             }else {
                 Toast.makeText(this@ShowData, "HTTP Status: ${response.code()}", Toast.LENGTH_LONG).show()
             }

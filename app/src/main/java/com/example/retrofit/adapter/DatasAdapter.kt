@@ -19,6 +19,7 @@ class DatasAdapter(var context:Context): RecyclerView.Adapter<DatasAdapter.Handl
     fun setColl(coll: ArrayList<Datas>?)
     {
         collection = coll
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): Handler {
