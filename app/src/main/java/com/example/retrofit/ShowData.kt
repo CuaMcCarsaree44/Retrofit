@@ -46,15 +46,18 @@ class ShowData : AppCompatActivity() {
         collection.enqueue(object: Callback<Datas> {
             override fun onResponse(call: Call<Datas>, response: Response<Datas>) {
                // var coll:ArrayList<Datas> = response.body().
-                    dataBinder!!.name = response.body()!!.name
-                    dataBinder!!.localName = response.body()!!.localName
-                    dataBinder!!.date = response.body()!!.date
-                    dataBinder!!.countryCode = response.body()!!.countryCode
-                    dataBinder!!.type = response.body()!!.type
-                collections?.add(dataBinder!!)
-                val adapter:DatasAdapter = DatasAdapter(this@ShowData)
-                adapter.setColl(collections!!)
-                rView?.setAdapter(adapter)
+                var status:Boolean = response.isSuccessful
+                if(status == true) {
+                    dataBinder!!.name = response.body()!!.name.toString()
+                    dataBinder!!.localName = response.body()!!.localName.toString()
+                    dataBinder!!.date = response.body()!!.date.toString()
+                    dataBinder!!.countryCode = response.body()!!.countryCode.toString()
+                    dataBinder!!.type = response.body()!!.type.toString()
+                    collections?.add(dataBinder!!)
+                    val adapter: DatasAdapter = DatasAdapter(this@ShowData)
+                    adapter.setColl(collections!!)
+                    rView?.setAdapter(adapter)
+                }else {}
             }
 
             override fun onFailure(call: Call<Datas>, t: Throwable) {

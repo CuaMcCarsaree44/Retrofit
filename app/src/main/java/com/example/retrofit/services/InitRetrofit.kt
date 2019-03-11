@@ -13,7 +13,7 @@ class InitRetrofit {
 
         fun getInstance(code:String, year:Int):ApiServices
         {
-            API_KEY += "${year.toString()}/code/"
+            API_KEY += "${year.toString()}/$code/"
             return setInit().create(ApiServices::class.java)
         }
 
