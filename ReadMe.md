@@ -15,8 +15,5 @@
 		Check out this <a onclick='trigger()' href="https://www.facebook.com/yosua.kristianto.5">link</a> for more information
 	</div>
   
-  <script type="text/javascript">
-	function trigger() { alert("You've been trapped"); }
-  </script>
 </body>
 </html>
