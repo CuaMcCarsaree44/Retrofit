@@ -1,0 +1,23 @@
+    I was planning to clean my code by make my adapter abstract, just i don't know how to use this....
+    So in the end, i will do this:
+
+                                AbstractAdapter
+                                     /\
+                                    /  \
+                                   /    \
+                         DatasAdapter   CardViewAdapter
+
+    With this design pattern, i could create
+    some Factory, so it will be the end of Shotgun Surgery at ShowData Activity.    -> showData()
+
+    I created some duplicate code in MainActivity where showData should be a single function
+        with calling some Factory and end with Polymorphism
+
+    Another Duplicate Code found in CardViewAdapter and DatasAdapter.
+        You will consider that the only changes happen at Class Name, onBindViewHolder, and Handler(){}
+    
+    
+    If you read this, please open my AbstractAdapter class for more detail. 
+    
+    
+    "I need more studying" -Cua
