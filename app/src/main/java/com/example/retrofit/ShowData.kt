@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Toast
 import com.example.retrofit.adapter.DatasAdapter
 import com.example.retrofit.model.Datas
@@ -13,6 +16,7 @@ import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.zip.Inflater
 
 class ShowData : AppCompatActivity() {
     var adapter: DatasAdapter = DatasAdapter(this)
@@ -64,5 +68,19 @@ class ShowData : AppCompatActivity() {
         })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        var menus: MenuInflater = getMenuInflater()
+        menus.inflate(R.menu.menu, menu)
+        return true
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId)
+        {
+            R.id.homeOption -> this.finish()
+            R.id.cardViewOption -> true
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
 }
