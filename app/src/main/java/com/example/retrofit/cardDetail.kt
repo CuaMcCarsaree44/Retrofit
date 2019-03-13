@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
+import com.example.retrofit.model.Roots
 import com.example.retrofit.services.CodeApiServices
 import com.example.retrofit.services.InitRetrofit
 import retrofit2.Call
@@ -52,14 +53,14 @@ class cardDetail : AppCompatActivity() {
 
 
         var api: CodeApiServices = InitRetrofit.setReturnInstance()
-        val collection: Call<ArrayList<com.example.retrofit.model.Response>> = api.getAllData(code)
+        val collection: Call<ArrayList<Roots>> = api.getAllData(code)
 
-        collection.enqueue(object: Callback<ArrayList<com.example.retrofit.model.Response>> {
-            override fun onFailure(call: Call<ArrayList<com.example.retrofit.model.Response>>, t: Throwable) {
-                Toast.makeText(this@cardDetail, "Data Not Found", Toast.LENGTH_SHORT).show()
+        collection.enqueue(object: Callback<ArrayList<Roots>> {
+            override fun onFailure(call: Call<ArrayList<Roots>>, t: Throwable) {
+                Toast.makeText(this@cardDetail, "${t.message}", Toast.LENGTH_LONG).show()
             }
 
-            override fun onResponse(call: Call<ArrayList<com.example.retrofit.model.Response>>, response: Response<ArrayList<com.example.retrofit.model.Response>>) {
+            override fun onResponse(call: Call<ArrayList<Roots>>, response: Response<ArrayList<Roots>>) {
                 var status: Boolean = response.isSuccessful
                 var feed:String? = response.body()!!.get(0).name
                 if (status == true) {
