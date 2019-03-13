@@ -6,5 +6,5 @@ import retrofit2.http.Path
 
 interface CodeApiServices {
     @GET("{code}")
-    fun getAllData(@Path("code") code:String): Call<ArrayList<Roots>>
+    fun getAllData(@Path("code") code:String): Call<Roots>
 }

@@ -1,10 +1,11 @@
 package com.example.retrofit.model
 
 import com.google.gson.annotations.SerializedName
+
 data class Roots(
 
 	@field:SerializedName("area")
-	val area: Int? = null,
+	val area: Double? = null,
 
 	@field:SerializedName("nativeName")
 	val nativeName: String? = null,
@@ -37,7 +38,7 @@ data class Roots(
 	val regionalBlocs: List<RegionalBlocsItem?>? = null,
 
 	@field:SerializedName("gini")
-	val gini: Int? = null,
+	val gini: Double? = null,
 
 	@field:SerializedName("population")
 	val population: Int? = null,
@@ -70,7 +71,7 @@ data class Roots(
 	val region: String? = null,
 
 	@field:SerializedName("latlng")
-	val latlng: List<Int?>? = null,
+	val latlng: List<Double?>? = null,
 
 	@field:SerializedName("currencies")
 	val currencies: List<CurrenciesItem?>? = null

@@ -53,16 +53,16 @@ class cardDetail : AppCompatActivity() {
 
 
         var api: CodeApiServices = InitRetrofit.setReturnInstance()
-        val collection: Call<ArrayList<Roots>> = api.getAllData(code)
+        val collection: Call<Roots> = api.getAllData(code)
 
-        collection.enqueue(object: Callback<ArrayList<Roots>> {
-            override fun onFailure(call: Call<ArrayList<Roots>>, t: Throwable) {
+        collection.enqueue(object: Callback<Roots> {
+            override fun onFailure(call: Call<Roots>, t: Throwable) {
                 Toast.makeText(this@cardDetail, "${t.message}", Toast.LENGTH_LONG).show()
             }
 
-            override fun onResponse(call: Call<ArrayList<Roots>>, response: Response<ArrayList<Roots>>) {
+            override fun onResponse(call: Call<Roots>, response: Response<Roots>) {
                 var status: Boolean = response.isSuccessful
-                var feed:String? = response.body()!!.get(0).name
+                var feed:String? = response.body()!!.name
                 if (status == true) {
                     country?.text = feed
                 } else {

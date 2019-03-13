@@ -10,6 +10,12 @@ import java.lang.Exception
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import com.example.retrofit.model.Roots
+import com.example.retrofit.services.CodeApiServices
+import com.example.retrofit.services.InitRetrofit
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -102,6 +108,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         code = parent?.getItemAtPosition(position).toString()
         text?.text = code
+        var api: CodeApiServices = InitRetrofit.setReturnInstance()
+        val collection: Call<Roots> = api.getAllData(code)
+
+        collection.enqueue(object: Callback<Roots> {
+            override fun onFailure(call: Call<Roots>, t: Throwable) {
+                Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onResponse(call: Call<Roots>, response: Response<Roots>) {
+                var status: Boolean = response.isSuccessful
+                var feed:String? = response.body()!!.name
+                if (status == true) {
+                    Toast.makeText(this@MainActivity, "You selected $feed", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this@MainActivity, "HTTP Status: ${response.code()}", Toast.LENGTH_LONG).show()
+                }
+            }
+        })
     }
 }
 
