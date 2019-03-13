@@ -12,4 +12,10 @@
             android:title="Card View"
     />
 
+    <item
+            android:id="@+id/listViewOption"
+          android:title="List View"
+
+    />
+
 </menu>

@@ -11,6 +11,11 @@
         android:background="@drawable/background"
 
 >
+<!--
+    ONE DAY I WILL CREATE THIS!!!
+    android:background="29000000" near xmlns
+    <include layout="@layout/video_back" />
+-->
 
     <TextView
             android:id="@+id/homeTitle"
@@ -25,7 +30,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constrainedTop_toTopOf="parent"
             android:layout_marginBottom="516dp"
             app:layout_constraintHorizontal_bias="1.0"
 
@@ -37,6 +41,7 @@
             android:layout_width="70dp"
             android:layout_height="50dp"
             android:backgroundTint="#FFFFFF"
+
 
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -63,8 +68,8 @@
             android:text="--"
             android:textColor="#000000"
             android:textSize="25sp"
-            android:textAlignment="center"
-            android:background="#666666"
+            android:gravity="center"
+            android:background="#4F666666"
 
     />
 
@@ -85,7 +90,10 @@
             android:textColor="#FFFFFF"
             android:backgroundTint="#FFFFFF"
 
-            app:layout_constraintHorizontal_bias="0.203" app:layout_constraintVertical_bias="0.499"/>
+            app:layout_constraintHorizontal_bias="0.203"
+            app:layout_constraintVertical_bias="0.499"
+
+    />
 
 
     <Button

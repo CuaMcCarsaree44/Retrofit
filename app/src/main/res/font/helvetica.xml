@@ -4,7 +4,7 @@
 >
 
     <font
-        android:fontStyle="bold"
+        android:fontStyle="normal"
         android:fontWeight="660"
         android:font="@font/helvetica_bold"
         />

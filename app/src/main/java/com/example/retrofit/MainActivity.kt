@@ -8,8 +8,8 @@ import android.net.ConnectivityManager
 import android.widget.*
 import java.lang.Exception
 import android.content.Intent
-
-
+import android.graphics.Color
+import android.net.Uri
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     var spinner: Spinner?= null
     var code:String = "ID"
     var text:TextView?= null
+    //var video:VideoView?= null
+
 
     fun isConnectedToServer(){
         val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -36,7 +38,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         search = findViewById(R.id.searchButton)
         searchBox = findViewById(R.id.searchTextbox)
         spinner = findViewById(R.id.countrypicker)
+        //I was dreaming... Creating my app with Video as a background
+        //But it comes end when it return "File is not supported"
+       /* video = findViewById(R.id.backgroundVideo)
+        var uri:Uri = Uri.parse("android.resource://raw/"+R.raw.video1)
 
+        video?.setVideoURI(uri)
+        video?.start()
+*/
         text = findViewById(R.id.spinner_label)
         var adapter = ArrayAdapter.createFromResource(this, R.array.country, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -44,6 +53,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         this.spinner?.onItemSelectedListener = this
 
         search?.setOnClickListener(this)
+
+        searchBox?.setOnClickListener(object:View.OnClickListener{
+            override fun onClick(v: View?) {
+                searchBox?.setHint("Year 1-9999")
+            }
+
+        })
     }
 
     override fun onClick(view: View?) {
@@ -53,9 +69,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
        {
            R.id.searchButton ->
            {
+               search?.setBackgroundColor(Color.parseColor("#4FFFFFFF"))
                try {
                    var numb:Int = searchString.toInt()
-                   if(numb > 9999 || numb < 0)
+                   if(numb > 9999 || numb < 1)
                        Toast.makeText(this@MainActivity, "Your input must 0 to 9999!", Toast.LENGTH_LONG).show()
                    else {
                        var intents:Intent = Intent(this@MainActivity, ShowData::class.java)
@@ -67,7 +84,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
                {
                    Toast.makeText(this@MainActivity, "Please input an Integer. . .", Toast.LENGTH_LONG).show()
                }
+               search?.setBackgroundColor(Color.parseColor("#FFFFFF"))
+               search?.setOnClickListener(null)
+               search?.setOnClickListener(this)
            }
+
+
        }
     }
 
@@ -81,13 +103,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         code = parent?.getItemAtPosition(position).toString()
         text?.text = code
     }
-/*
-    fun showBook()
-    {
-        var api:ApiServices?
-        api = InitRetrofit.getInstance()
-    }
-*/
 }
 
 

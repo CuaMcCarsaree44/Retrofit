@@ -7,7 +7,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
+import com.example.retrofit.adapter.CardViewAdapter
 import com.example.retrofit.adapter.DatasAdapter
 import com.example.retrofit.model.Datas
 import com.example.retrofit.services.ApiServices
@@ -20,6 +22,7 @@ import java.util.zip.Inflater
 
 class ShowData : AppCompatActivity() {
     var adapter: DatasAdapter = DatasAdapter(this)
+    var cardAdapter:CardViewAdapter = CardViewAdapter(this)
 
     companion object {
         val YEAR_PRIMARY_KEY:String = "Year"
@@ -37,18 +40,44 @@ class ShowData : AppCompatActivity() {
 
         rView = findViewById(R.id.recycleview)
         rView!!.layoutManager = LinearLayoutManager(this)
-        rView?.adapter = adapter
 
         year = intent.getIntExtra(YEAR_PRIMARY_KEY, 0)
         code = intent.getStringExtra(CODE_PRIMARY_KEY)
-        showData()
+        cardView()
+    }
+
+    fun cardView()
+    {
+        rView?.adapter = cardAdapter
+        Toast.makeText(this@ShowData, "Card View Implemented", Toast.LENGTH_LONG).show()
+        var api:ApiServices = InitRetrofit.getInstance()
+        val collection: Call<ArrayList<Datas>> = api.getAllData(year, code)
+
+        collection.enqueue(object: Callback<ArrayList<Datas>> {
+            override fun onFailure(call: Call<ArrayList<Datas>>, t: Throwable) {
+                Toast.makeText(this@ShowData, "Data Not Found", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<ArrayList<Datas>>, response: Response<ArrayList<Datas>>) {
+                var status:Boolean = response.isSuccessful
+                var feed:ArrayList<Datas>? = response?.body()
+                if(status == true) {
+                    cardAdapter?.setColl(feed)
+                    rView?.adapter?.notifyDataSetChanged()
+                }else {
+                    Toast.makeText(this@ShowData, "HTTP Status: ${response.code()}", Toast.LENGTH_LONG).show()
+                }
+            }
+
+        })
     }
 
     fun showData()
     {
+        rView?.adapter = adapter
         var api:ApiServices = InitRetrofit.getInstance()
         val collection: Call<ArrayList<Datas>> = api.getAllData(year, code)
-
+        Toast.makeText(this@ShowData, "List View Implemented", Toast.LENGTH_LONG).show()
         collection.enqueue(object: Callback<ArrayList<Datas>> {
             override fun onFailure(call: Call<ArrayList<Datas>>, t: Throwable) {
                 Toast.makeText(this@ShowData, "Data Not Found", Toast.LENGTH_SHORT).show()
@@ -78,7 +107,8 @@ class ShowData : AppCompatActivity() {
         when(item?.itemId)
         {
             R.id.homeOption -> this.finish()
-            R.id.cardViewOption -> true
+            R.id.cardViewOption -> cardView()
+            R.id.listViewOption -> showData()
         }
 
         return super.onOptionsItemSelected(item)
